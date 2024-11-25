@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import Image from "next/image";
 import Navbar from "@/app/component/navbar";
 import React, { useState } from "react";
@@ -10,7 +8,6 @@ import { AlarmClockPlus } from "lucide-react";
 
 export default function HasilPeriksaPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -98,7 +95,7 @@ export default function HasilPeriksaPage() {
                                     Waktu
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Alasan
+                                    Keluhan
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Status
@@ -121,11 +118,10 @@ export default function HasilPeriksaPage() {
                                     <td className="px-6 py-4">{appointment.alasan}</td>
                                     <td className="px-6 py-4">
                                         <span
-                                            className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
-                                                appointment.status === "Dijadwalkan"
+                                            className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${appointment.status === "Dijadwalkan"
                                                     ? "bg-red-300 border border-red-700"
                                                     : "bg-blue-300 border border-blue-700"
-                                            }`}
+                                                }`}
                                         >
                                             {appointment.status}
                                         </span>

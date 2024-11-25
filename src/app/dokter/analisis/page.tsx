@@ -92,7 +92,7 @@ export default function Analisis() {
       <Navbar />
 
       {/* Table */}
-      <div className="h-screen w-screen mt-60 mx-32 overflow-hidden sm:rounded-lg">
+      <div className="h-screen w-screen mt-36 mx-32 overflow-hidden sm:rounded-lg">
         <div className="h-screen overflow-hidden">
           <table className="w-3/4 text-sm text-left shadow-md rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -111,6 +111,9 @@ export default function Analisis() {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Dokumen Pemeriksaan
+                </th>
+                <th scope="col" className="px-6 py-3">
+
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Keterangan
@@ -137,6 +140,15 @@ export default function Analisis() {
                       height={50}
                       className="cursor-pointer"
                     />
+                  </a>
+                </td>
+                <td className="px-6 py-4">
+                  <a
+                    href="/path-to-dokumen.pdf"
+                    download
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Unduh Dokumen
                   </a>
                 </td>
                 <td className="px-6 py-4">{keteranganList[0]}</td>
@@ -167,6 +179,15 @@ export default function Analisis() {
                     />
                   </a>
                 </td>
+                <td className="px-6 py-4">
+                  <a
+                    href="/path-to-dokumen.pdf"
+                    download
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Unduh Dokumen
+                  </a>
+                </td>
                 <td className="px-6 py-4">{keteranganList[1]}</td>
                 <td className="px-6 py-4">
                   <button
@@ -187,7 +208,7 @@ export default function Analisis() {
         show={showModal}
         onClose={() => setShowModal(false)}
         onSave={handleSave}
-        initialKeterangan={keteranganList[currentIndex ?? 0]} 
+        initialKeterangan={keteranganList[currentIndex ?? 0]}
       />
     </>
   );

@@ -20,24 +20,15 @@ export default function HasilPeriksaPage() {
             </div>
             {/* Navbar */}
             <Navbar />
-            {/* Button */}
-            <div className="absolute top-40 right-44">
-                <button
-                    type="button"
-                    className="w-24 bg-sky-300 shadow-xl shadow-sky-200 text-white py-3 rounded-xl hover:bg-sky-200 focus:outline-none"
-                >
-                    Login
-                </button>
-            </div>
 
             {/* Table */}
-            <div className="h-screen w-screen mt-60 mx-32 overflow-hidden sm:rounded-lg">
+            <div className="h-screen w-screen mt-36 mx-32 overflow-hidden sm:rounded-lg">
                 <div className="h-screen overflow-hidden">
                     <table className="w-3/4 text-sm text-left shadow-md rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Nama Pasien
+                                    Nama Dokter
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Tanggal
