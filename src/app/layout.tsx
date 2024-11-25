@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "./component/navbar";
 
 type RootLayoutProps = {
-  children: ReactNode; 
+  children: ReactNode;
 };
 
 const geistSans = localFont({
@@ -30,8 +30,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="h-full flex overflow-hidden bg-gray-100">
-            {children}
+          {children}
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
       </body>
     </html>
   );
