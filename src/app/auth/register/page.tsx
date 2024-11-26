@@ -6,7 +6,6 @@ import Link from "next/link";
 
 function Register() {
     const [fullName, setFullName] = useState('');
-    const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dob, setDob] = useState('');
     const [address, setAddress] = useState('');
@@ -37,7 +36,7 @@ function Register() {
         }
         setError('');
 
-        console.log('Registering with:', { fullName, email, phoneNumber, dob, address, role, password });
+        console.log('Registering with:', { fullName, phoneNumber, dob, address, role });
 
         // Redirect ke halaman pasien setelah registrasi berhasil
         router.push('/pasien/dashboard');
@@ -71,19 +70,45 @@ function Register() {
                             />
                         </div>
 
-                        {/* Email
-                        <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-regular text-gray-700">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-100"
-                                placeholder="Enter your email"
-                                required
-                            />
-                        </div> */}
+                        {/* gender */}
+                        <div className="mb-4 relative">
+                            <label htmlFor="role" className="block text-sm font-regular text-gray-700">Role</label>
+                            <button
+                                type="button"
+                                onClick={() => setDropdownOpen(!dropdownOpen)}
+                                className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-100 bg-white flex justify-between items-center"
+                            >
+                                {role || "Select Role"}
+                                <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            {dropdownOpen && (
+                                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow">
+                                    <ul className="py-1 text-sm text-gray-700">
+                                        <li>
+                                            <button
+                                                type="button"
+                                                onClick={() => { setRole("Patient"); setDropdownOpen(false); }}
+                                                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                            >
+                                                Laki-laki
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                type="button"
+                                                onClick={() => { setRole("Doctor"); setDropdownOpen(false); }}
+                                                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                            >
+                                                Perempuan
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
 
                         <div className="mb-4 relative">
                             <label htmlFor="role" className="block text-sm font-regular text-gray-700">Role</label>
@@ -119,20 +144,12 @@ function Register() {
                                                 Doctor
                                             </button>
                                         </li>
-                                        <li>
-                                            <button
-                                                type="button"
-                                                onClick={() => { setRole("Admin"); setDropdownOpen(false); }}
-                                                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                                            >
-                                                Admin
-                                            </button>
-                                        </li>
                                     </ul>
                                 </div>
                             )}
                         </div>
 
+                        
 
                         {/* Nomor Telepon */}
                         <div className="mb-4">
@@ -144,6 +161,19 @@ function Register() {
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-100"
                                 placeholder="Enter your phone number"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label htmlFor="fullName" className="block text-sm font-regular text-gray-700">Tempat Lahir</label>
+                            <input
+                                type="text"
+                                id="fullName"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-100"
+                                placeholder="Enter your full name"
                                 required
                             />
                         </div>

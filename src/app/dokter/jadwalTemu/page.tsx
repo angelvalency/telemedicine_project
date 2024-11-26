@@ -16,7 +16,7 @@ export default function HasilPeriksaPage() {
             tanggal: "2024-12-01",
             tempat: "Klinik A",
             waktu: "10:00 AM",
-            alasan: "Pemeriksaan Rutin",
+            keluhan: "Pemeriksaan Rutin",
             status: "Dijadwalkan",
         },
         {
@@ -26,7 +26,7 @@ export default function HasilPeriksaPage() {
             tanggal: "2024-12-05",
             tempat: "Klinik B",
             waktu: "11:00 AM",
-            alasan: "Konsultasi Gizi",
+            keluhan: "Konsultasi Gizi",
             status: "Disetujui",
         },
         {
@@ -117,9 +117,8 @@ export default function HasilPeriksaPage() {
                                     <th scope="col" className="px-6 py-3">Nama Pasien</th>
                                     <th scope="col" className="px-6 py-3">Nama Dokter</th>
                                     <th scope="col" className="px-6 py-3">Tanggal</th>
-                                    <th scope="col" className="px-6 py-3">Tempat</th>
                                     <th scope="col" className="px-6 py-3">Waktu</th>
-                                    <th scope="col" className="px-6 py-3">Alasan</th>
+                                    <th scope="col" className="px-6 py-3">Keluhan</th>
                                     <th scope="col" className="px-6 py-3">Status</th>
                                     <th scope="col" className="px-6 py-3"></th>
                                 </tr>
@@ -135,14 +134,13 @@ export default function HasilPeriksaPage() {
                                         </td>
                                         <td className="px-6 py-4">{appointment.dokter}</td>
                                         <td className="px-6 py-4">{appointment.tanggal}</td>
-                                        <td className="px-6 py-4">{appointment.tempat}</td>
                                         <td className="px-6 py-4">{appointment.waktu}</td>
-                                        <td className="px-6 py-4">{appointment.alasan}</td>
+                                        <td className="px-6 py-4">{appointment.keluhan}</td>
                                         <td className="px-6 py-4">
                                             <span
-                                                className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${appointment.status === "Disetujui"
-                                                        ? "bg-blue-300 border border-blue-700"
-                                                        : "bg-red-300 border border-red-700"
+                                                className={`px-3 py-1 rounded-full text-blue-700 text-sm font-regular ${appointment.status === "Disetujui"
+                                                        ? "border border-blue-200 bg-blue-50 text-blue-400 hover:bg-blue-200"
+                                                        : "border border-red-200 bg-red-50 text-red-400 hover:bg-red-200"
                                                     }`}
                                             >
                                                 {appointment.status}
@@ -151,7 +149,7 @@ export default function HasilPeriksaPage() {
                                         </td>
                                         <td className="px-6 py-4 flex gap-2">
                                             <button
-                                                className="px-3 py-1 rounded-full bg-blue-300 border border-green-700 text-white text-sm font-semibold"
+                                                className="px-3 py-1 rounded-full border border-blue-200 bg-blue-50 text-blue-400 hover:bg-blue-200 text-sm font-regular"
                                                 onClick={() =>
                                                     handleStatusChange(appointment.id, "Disetujui")
                                                 }
@@ -159,7 +157,7 @@ export default function HasilPeriksaPage() {
                                                 Disetujui
                                             </button>
                                             <button
-                                                className="px-3 py-1 rounded-full bg-red-300 border border-red-700 text-white text-sm font-semibold"
+                                                className="px-3 py-1 rounded-full border border-red-200 bg-red-50 text-red-400 hover:bg-red-200 text-sm font-regular"
                                                 onClick={() =>
                                                     handleStatusChange(appointment.id, "Ditolak")
                                                 }

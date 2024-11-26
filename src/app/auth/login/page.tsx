@@ -7,6 +7,8 @@ import Link from "next/link";
 const Login = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [role, setRole] = useState('');
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
@@ -69,6 +71,30 @@ const Login = () => {
                             required
                         />
                     </div>
+                    {dropdownOpen && (
+                        <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow">
+                            <ul className="py-1 text-sm text-gray-700">
+                                <li>
+                                    <button
+                                        type="button"
+                                        onClick={() => { setRole("Patient"); setDropdownOpen(false); }}
+                                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                    >
+                                        Patient
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        onClick={() => { setRole("Doctor"); setDropdownOpen(false); }}
+                                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                    >
+                                        Doctor
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    )}
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-sm font-regular text-gray-700">Password</label>
                         <input

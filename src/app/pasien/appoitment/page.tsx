@@ -5,8 +5,13 @@ import Navbar from "@/app/component/navbar";
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { AlarmClockPlus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export default function HasilPeriksaPage() {
+    const [doctorSchedule, setDoctorSchedule] = useState("");
+    const [doctorName, setDoctorName] = useState("");
+    const [doctorDropdownOpen, setDoctorDropdownOpen] = useState(false);
+    const [jadwalDropdownOpen, setJadwalDropdownOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -19,7 +24,7 @@ export default function HasilPeriksaPage() {
             tanggal: "2024-12-01",
             tempat: "Klinik A",
             waktu: "10:00 AM",
-            alasan: "Pemeriksaan Rutin",
+            keluhan: "Pemeriksaan Rutin",
             status: "Dijadwalkan",
         },
         {
@@ -28,7 +33,7 @@ export default function HasilPeriksaPage() {
             tanggal: "2024-12-05",
             tempat: "Klinik B",
             waktu: "11:00 AM",
-            alasan: "Konsultasi Gizi",
+            keluhan: "Konsultasi Gizi",
             status: "Disetujui",
         },
         {
@@ -37,7 +42,7 @@ export default function HasilPeriksaPage() {
             tanggal: "2024-12-10",
             tempat: "Klinik C",
             waktu: "01:00 PM",
-            alasan: "Konsultasi Umum",
+            keluhan: "Konsultasi Umum",
             status: "Dijadwalkan",
         },
     ];
@@ -80,19 +85,13 @@ export default function HasilPeriksaPage() {
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Nama Pasien
-                                </th>
-                                <th scope="col" className="px-6 py-3">
                                     Nama Dokter
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Tanggal
+                                    Hari
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Tempat
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Waktu
+                                    Jam Kerja
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Keluhan
@@ -108,19 +107,17 @@ export default function HasilPeriksaPage() {
                                     key={index}
                                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 >
-                                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                        {appointment.pasien}
-                                    </td>
                                     <td className="px-6 py-4">{appointment.dokter}</td>
                                     <td className="px-6 py-4">{appointment.tanggal}</td>
-                                    <td className="px-6 py-4">{appointment.tempat}</td>
                                     <td className="px-6 py-4">{appointment.waktu}</td>
-                                    <td className="px-6 py-4">{appointment.alasan}</td>
+                                    <td className="px-6 py-4">{appointment.keluhan}</td>
                                     <td className="px-6 py-4">
                                         <span
-                                            className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${appointment.status === "Dijadwalkan"
-                                                    ? "bg-red-300 border border-red-700"
-                                                    : "bg-blue-300 border border-blue-700"
+                                            className={`px-3 py-1 rounded-full text-sm font-sm ${appointment.status === "Dijadwalkan"
+                                                ? "border border-yellow-200 bg-yellow-50 text-yellow-400 hover:bg-yellow-200"
+                                                : appointment.status === "Disetujui"
+                                                    ? "border border-blue-200 bg-blue-50 text-blue-400 hover:bg-blue-200"
+                                                    : "border border-red-200 bg-red-50 text-red-400 hover:bg-red-200"
                                                 }`}
                                         >
                                             {appointment.status}
@@ -146,14 +143,88 @@ export default function HasilPeriksaPage() {
                         </button>
                         <h2 className="text-xl font-semibold mb-4">Appointment</h2>
                         <form>
+                            <header>
+                                <p className="text-sm font-medium text-gray-700"></p>
+                            </header>
+
+                            {/* nama pasien
                             <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700">Username</label>
+                                <label className="block text-sm font-medium text-gray-700">Nama Pasien</label>
                                 <input type="text" className="w-full p-2 border border-gray-300 rounded-md" />
+                            </div> */}
+
+                            {/* nama dokter */}
+                            <div className="relative mb-4">
+                                <label htmlFor="doctorName" className="block text-sm font-medium text-gray-700">
+                                    Nama Dokter
+                                    <ChevronDown size={20} className="absolute right-4 top-1/2 translate-y-auto text-gray-500" />
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={() => setDoctorDropdownOpen(!doctorDropdownOpen)}
+                                    className="w-full mt-2 p-3 border border-gray-300 rounded-xl text-left focus:outline-none focus:ring-2 focus:ring-cyan-100"
+                                >
+                                    {doctorName || "Select Doctor"}
+                                </button>
+                                {doctorDropdownOpen && (
+                                    <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow">
+                                        <ul className="py-1 text-sm text-gray-700">
+                                            {["Dr. Smith", "Dr. Johnson", "Dr. Williams"].map((option) => (
+                                                <li key={option}>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setDoctorName(option);
+                                                            setDoctorDropdownOpen(false);
+                                                        }}
+                                                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        {option}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700">Password</label>
-                                <input type="password" className="w-full p-2 border border-gray-300 rounded-md" />
+
+
+                            {/* tanggal temu */}
+                            <div className="relative mb-4">
+                                <label htmlFor="doctorSchedule" className="block text-sm font-medium text-gray-700">
+                                    Jadwal Dokter
+                                    <ChevronDown size={20} className="absolute right-4 top-1/2 translate-y-auto text-gray-500" />
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={() => setJadwalDropdownOpen(!jadwalDropdownOpen)}
+                                    className="w-full mt-2 p-3 border border-gray-300 rounded-xl text-left focus:outline-none focus:ring-2 focus:ring-cyan-100"
+                                >
+                                    {doctorSchedule || "Select Schedule"}
+                                </button>
+                                {jadwalDropdownOpen && (
+                                    <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow">
+                                        <ul className="py-1 text-sm text-gray-700">
+                                            {/* Array jadwal dokter */}
+                                            {["2024-11-28", "2024-11-29", "2024-12-01"].map((date) => (
+                                                <li key={date}>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setDoctorSchedule(date); // Set jadwal dokter
+                                                            setJadwalDropdownOpen(false); // Tutup dropdown
+                                                        }}
+                                                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        {date}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
+
                             <button
                                 type="submit"
                                 className="w-full bg-sky-300 shadow-xl shadow-sky-200 text-white py-3 rounded-xl hover:bg-sky-200"

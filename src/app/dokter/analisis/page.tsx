@@ -9,25 +9,43 @@ import { Pencil } from "lucide-react";
 interface ModalProps {
   show: boolean;
   onClose: () => void;
-  onSave: (keterangan: string) => void;
+  onSave: (keterangan: string, tindakLanjut: string) => void;
   initialKeterangan: string;
+  initialTindakLanjut: string;
 }
 
 // Modal component
-const Modal = ({ show, onClose, onSave, initialKeterangan }: ModalProps) => {
+const Modal = ({
+  show,
+  onClose,
+  onSave,
+  initialKeterangan,
+  initialTindakLanjut,
+}: ModalProps) => {
   const [keterangan, setKeterangan] = useState(initialKeterangan);
+  const [tindakLanjut, setTindakLanjut] = useState(initialTindakLanjut);
 
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+    <div
+      className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50"
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="bg-white p-6 rounded-lg w-96">
-        <h3 className="text-xl mb-4">Edit Keterangan</h3>
+        <h3 className="text-xl mb-4">Edit Keterangan dan Tindak Lanjut</h3>
         <textarea
           value={keterangan}
           onChange={(e) => setKeterangan(e.target.value)}
-          className="w-full h-32 p-2 border border-gray-300 rounded-lg"
+          className="w-full h-20 p-2 border border-gray-300 rounded-lg mb-4"
           placeholder="Masukkan keterangan"
+        />
+        <textarea
+          value={tindakLanjut}
+          onChange={(e) => setTindakLanjut(e.target.value)}
+          className="w-full h-20 p-2 border border-gray-300 rounded-lg"
+          placeholder="Masukkan tindak lanjut"
         />
         <div className="mt-4 flex justify-end">
           <button
@@ -37,7 +55,7 @@ const Modal = ({ show, onClose, onSave, initialKeterangan }: ModalProps) => {
             Cancel
           </button>
           <button
-            onClick={() => onSave(keterangan)}
+            onClick={() => onSave(keterangan, tindakLanjut)}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg"
           >
             Save
@@ -49,158 +67,91 @@ const Modal = ({ show, onClose, onSave, initialKeterangan }: ModalProps) => {
 };
 
 export default function Analisis() {
-  // Define state with proper types
+  // State for keterangan and tindak lanjut
   const [keteranganList, setKeteranganList] = useState<string[]>([
     "Pemeriksaan rutin untuk evaluasi kesehatan.",
     "Hasil pemeriksaan laboratorium.",
   ]);
+  const [tindakLanjutList, setTindakLanjutList] = useState<string[]>([
+    "Tidak ada tindak lanjut diperlukan.",
+    "Tindak lanjut dengan dokter spesialis.",
+  ]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
-  // Handle edit function with proper type
+  // Handle edit function
   const handleEdit = (index: number) => {
     setCurrentIndex(index);
     setShowModal(true);
   };
 
-  // Handle save function with proper type
-  const handleSave = (newKeterangan: string) => {
+  // Handle save function
+  const handleSave = (newKeterangan: string, newTindakLanjut: string) => {
     if (currentIndex !== null) {
       const updatedKeteranganList = [...keteranganList];
+      const updatedTindakLanjutList = [...tindakLanjutList];
+
       updatedKeteranganList[currentIndex] = newKeterangan;
+      updatedTindakLanjutList[currentIndex] = newTindakLanjut;
+
       setKeteranganList(updatedKeteranganList);
+      setTindakLanjutList(updatedTindakLanjutList);
       setShowModal(false);
     }
   };
 
   return (
     <>
-      {/* Wrapper Grid */}
-      <div className="">
-        {/* Logo */}
-        <div className="absolute top-0 left-0 w-full flex justify-left ml-20">
-          <Image
-            src="/assets/Telemedis_logo.svg"
-            alt="Telemedis Logo"
-            width={180}
-            height={180}
-            className="z-10"
-          />
-        </div>
+      <div className="absolute top-0 left-0 w-full flex justify-left ml-20">
+        <Image
+          src="/assets/Telemedis_logo.svg"
+          alt="Telemedis Logo"
+          width={180}
+          height={180}
+          className="z-10"
+        />
       </div>
       {/* Navbar */}
       <Navbar />
 
       {/* Table */}
       <div className="h-screen w-screen mt-36 mx-32 overflow-hidden sm:rounded-lg">
-        <div className="h-screen overflow-hidden">
-          <table className="w-3/4 text-sm text-left shadow-md rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Nama Pasien
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nama Dokter
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Tanggal
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Jenis Pemeriksaan
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Dokumen Pemeriksaan
-                </th>
-                <th scope="col" className="px-6 py-3">
-
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Keterangan
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Edit
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <table className="w-3/4 text-sm text-left shadow-md rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th className="px-6 py-3">Nama Pasien</th>
+              <th className="px-6 py-3">Tanggal</th>
+              <th className="px-6 py-3">Keluhan</th>
+              <th className="px-6 py-3">Keterangan</th>
+              <th className="px-6 py-3">Tindak Lanjut</th>
+              <th className="px-6 py-3">Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {keteranganList.map((keterangan, index) => (
+              <tr
+                key={index}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Pasien A
+                  Pasien {String.fromCharCode(65 + index)}
                 </td>
-                <td className="px-6 py-4">Dr. Andi Setiawan</td>
                 <td className="px-6 py-4">25 November 2024</td>
-                <td className="px-6 py-4">Pemeriksaan rutin</td>
-                <td className="px-6 py-4">
-                  <a href="/path-to-image.jpg" download>
-                    <Image
-                      src="/path-to-image.jpg"
-                      alt="Dokumen Pemeriksaan"
-                      width={50}
-                      height={50}
-                      className="cursor-pointer"
-                    />
-                  </a>
-                </td>
-                <td className="px-6 py-4">
-                  <a
-                    href="/path-to-dokumen.pdf"
-                    download
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Unduh Dokumen
-                  </a>
-                </td>
-                <td className="px-6 py-4">{keteranganList[0]}</td>
+                <td className="px-6 py-4">Keluhan {index + 1}</td>
+                <td className="px-6 py-4">{keterangan}</td>
+                <td className="px-6 py-4">{tindakLanjutList[index]}</td>
                 <td className="px-6 py-4">
                   <button
-                    onClick={() => handleEdit(0)}
+                    onClick={() => handleEdit(index)}
                     className="text-yellow-500 hover:text-yellow-400"
                   >
                     <Pencil size={20} />
                   </button>
                 </td>
               </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Pasien B
-                </td>
-                <td className="px-6 py-4">Dr. Lisa Putri</td>
-                <td className="px-6 py-4">22 November 2024</td>
-                <td className="px-6 py-4">Pemeriksaan laboratorium</td>
-                <td className="px-6 py-4">
-                  <a href="/path-to-image-2.jpg" download>
-                    <Image
-                      src="/path-to-image-2.jpg"
-                      alt="Dokumen Pemeriksaan"
-                      width={50}
-                      height={50}
-                      className="cursor-pointer"
-                    />
-                  </a>
-                </td>
-                <td className="px-6 py-4">
-                  <a
-                    href="/path-to-dokumen.pdf"
-                    download
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Unduh Dokumen
-                  </a>
-                </td>
-                <td className="px-6 py-4">{keteranganList[1]}</td>
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => handleEdit(1)}
-                    className="text-yellow-500 hover:text-yellow-400"
-                  >
-                    <Pencil size={20} />
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Modal */}
@@ -208,7 +159,12 @@ export default function Analisis() {
         show={showModal}
         onClose={() => setShowModal(false)}
         onSave={handleSave}
-        initialKeterangan={keteranganList[currentIndex ?? 0]}
+        initialKeterangan={
+          currentIndex !== null ? keteranganList[currentIndex] : ""
+        }
+        initialTindakLanjut={
+          currentIndex !== null ? tindakLanjutList[currentIndex] : ""
+        }
       />
     </>
   );

@@ -3,14 +3,23 @@
 import Image from "next/image";
 import Navbar from "@/app/component/navbar";
 import React, { useState } from "react";
-import { FilePlus } from "lucide-react";
-import { X } from "lucide-react";
+import { Pencil, X } from "lucide-react";
 
 export default function HasilPeriksaPage() {
-    const [dob, setDob] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setUploadedFile(file);
+            closeModal();
+        }
+    };
+
     return (
         <>
             {/* Wrapper Grid */}
@@ -28,18 +37,6 @@ export default function HasilPeriksaPage() {
             </div>
             {/* Navbar */}
             <Navbar />
-            {/* Button */}
-            <div className="absolute top-40 right-44">
-                <button
-                    type="button"
-                    className="w-auto bg-sky-300 shadow-xl shadow-sky-200 text-white flex justify-center items-center gap-2 p-4 rounded-xl hover:bg-sky-200 focus:outline-none"
-                    onClick={openModal}
-                >
-                    <FilePlus size={20} />
-                    Upload Dokumen
-                </button>
-            </div>
-
             {/* Table */}
             <div className="h-screen w-screen mt-60 mx-32 overflow-hidden sm:rounded-lg">
                 <div className="h-screen overflow-hidden">
@@ -59,9 +56,6 @@ export default function HasilPeriksaPage() {
                                     Dokumen Pemeriksaan
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    
-                                </th>
-                                <th scope="col" className="px-6 py-3">
                                     Keterangan
                                 </th>
                             </tr>
@@ -78,58 +72,22 @@ export default function HasilPeriksaPage() {
                                     Nathasa
                                 </td>
                                 <td className="px-6 py-4">
-                                    <a href="/path-to-image.jpg" download>
-                                        <Image
-                                            src="/path-to-image.jpg"
-                                            alt="Dokumen Pemeriksaan"
-                                            width={50}
-                                            height={50}
-                                            className="cursor-pointer"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <a
-                                        href="/path-to-dokumen.pdf"
-                                        download
-                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                    >
-                                        Unduh Dokumen
-                                    </a>
-                                </td>
-                                <td className="px-6 py-4">
-                                    Pemeriksaan rutin untuk evaluasi kesehatan.
-                                </td>
-                            </tr>
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Dr. Andi Setiawan
-                                </td>
-                                <td className="px-6 py-4">
-                                    25 November 2024
-                                </td>
-                                <td className="px-6 py-4">
-                                    Nathasa
-                                </td>
-                                <td className="px-6 py-4">
-                                    <a href="/path-to-image.jpg" download>
-                                        <Image
-                                            src="/path-to-image.jpg"
-                                            alt="Dokumen Pemeriksaan"
-                                            width={50}
-                                            height={50}
-                                            className="cursor-pointer"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <a
-                                        href="/path-to-dokumen.pdf"
-                                        download
-                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                    >
-                                        Unduh Dokumen
-                                    </a>
+                                    {uploadedFile ? (
+                                        <a
+                                            href={URL.createObjectURL(uploadedFile)}
+                                            download={uploadedFile.name}
+                                            className="text-blue-600 hover:underline"
+                                        >
+                                            {uploadedFile.name}
+                                        </a>
+                                    ) : (
+                                        <button
+                                            onClick={openModal}
+                                            className="text-gray-600 hover:text-gray-900"
+                                        >
+                                            <Pencil size={20} />
+                                        </button>
+                                    )}
                                 </td>
                                 <td className="px-6 py-4">
                                     Pemeriksaan rutin untuk evaluasi kesehatan.
@@ -151,36 +109,23 @@ export default function HasilPeriksaPage() {
                                 </button>
                                 <h2 className="text-xl font-semibold mb-4">Upload Dokumen</h2>
                                 <form>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                                        <input type="text" className="w-full p-2 border border-gray-300 rounded-md" />
+                                    <div className="flex items-center justify-center w-full my-4">
+                                        <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                </svg>
+                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                            </div>
+                                            <input id="dropzone-file" type="file" className="hidden" />
+                                        </label>
                                     </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="dob" className="block text-sm font-regular text-gray-700">Tanggal</label>
-                                        <input
-                                            type="date"
-                                            id="dob"
-                                            value={dob}
-                                            onChange={(e) => setDob(e.target.value)}
-                                            className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-100"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium text-gray-700">Hasil Pemeriksaan</label>
-                                        <input type="file" className="w-full p-2 border border-gray-300 rounded-md" />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                                        <input type="text" className="w-full p-2 border border-gray-300 rounded-md" />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium text-gray-700">Password</label>
-                                        <input type="password" className="w-full p-2 border border-gray-300 rounded-md" />
-                                    </div>
+
                                     <button
-                                        type="submit"
+                                        type="button"
                                         className="w-full bg-sky-300 shadow-xl shadow-sky-200 text-white py-3 rounded-xl hover:bg-sky-200"
+                                        onClick={closeModal}
                                     >
                                         Submit
                                     </button>

@@ -99,7 +99,7 @@ export default function Navbar() {
               <Users size={24} />
             </Link>
           </li>
-          
+
           {/* data Appointment */}
           <li>
             <Link
@@ -123,7 +123,7 @@ export default function Navbar() {
           {/* logout */}
           <li>
             <Link
-              href="/auth/home"
+              href="/"
               className="flex justify-center items-center text-gray-600 hover:text-sky-500 transition-colors duration-200"
             >
               <LogOut size={24} />
