@@ -34,29 +34,42 @@ const Modal = ({
       aria-modal="true"
     >
       <div className="bg-white p-6 rounded-lg w-96">
-        <h3 className="text-xl mb-4">Edit Keterangan dan Tindak Lanjut</h3>
-        <textarea
-          value={keterangan}
-          onChange={(e) => setKeterangan(e.target.value)}
-          className="w-full h-20 p-2 border border-gray-300 rounded-lg mb-4"
-          placeholder="Masukkan keterangan"
-        />
-        <textarea
-          value={tindakLanjut}
-          onChange={(e) => setTindakLanjut(e.target.value)}
-          className="w-full h-20 p-2 border border-gray-300 rounded-lg"
-          placeholder="Masukkan tindak lanjut"
-        />
+        <h3 className="text-xl mb-4">Hasil Pemeriksaan</h3>
+        <div className="mb-4">
+          <label htmlFor="keterangan" className="block text-gray-700 font-medium mb-2">
+            Keterangan
+          </label>
+          <textarea
+            id="keterangan"
+            value={keterangan}
+            onChange={(e) => setKeterangan(e.target.value)}
+            className="w-full h-20 p-2 border border-gray-300 rounded-lg"
+            placeholder="Masukkan keterangan"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="tindakLanjut" className="block text-gray-700 font-medium mb-2">
+            Tindak Lanjut
+          </label>
+          <textarea
+            id="tindakLanjut"
+            value={tindakLanjut}
+            onChange={(e) => setTindakLanjut(e.target.value)}
+            className="w-full h-20 p-2 border border-gray-300 rounded-lg"
+            placeholder="Masukkan tindak lanjut"
+          />
+        </div>
         <div className="mt-4 flex justify-end">
           <button
             onClick={onClose}
-            className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg mr-2"
+            className="text-sm w-auto p-4 bg-gray-300 text-gray-800 px-4 py-2 rounded-lg mr-2 shadow-xl hover:bg-gray-200 hover:text-gray-800"
           >
             Cancel
           </button>
           <button
             onClick={() => onSave(keterangan, tindakLanjut)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            className="text-white text-sm w-auto p-4 bg-sky-300 dow-xl shadow-sky-200 hover:bg-sky-200 hover:text-white rounded-lg"
           >
             Save
           </button>

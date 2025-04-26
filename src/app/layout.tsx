@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./component/navbar";
+import Navbar from "./component/navbar"; 
 
 type RootLayoutProps = {
   children: ReactNode;

@@ -9,7 +9,6 @@ export default function HasilPeriksaPage() {
         {
             namaLengkap: "John Doe",
             gender: "Laki-laki",
-            role: "Dokter",
             noTelp: "08123456789",
             tempatLahir: "Surabaya",
             tanggalLahir: "1990-05-15",
@@ -18,7 +17,6 @@ export default function HasilPeriksaPage() {
         {
             namaLengkap: "Jane Smith",
             gender: "Perempuan",
-            role: "Admin",
             noTelp: "08212345678",
             tempatLahir: "Jakarta",
             tanggalLahir: "1995-08-20",
@@ -54,7 +52,6 @@ export default function HasilPeriksaPage() {
                             <tr>
                                 <th scope="col" className="px-6 py-3">Nama Lengkap</th>
                                 <th scope="col" className="px-6 py-3">Gender</th>
-                                <th scope="col" className="px-6 py-3">Role</th>
                                 <th scope="col" className="px-6 py-3">No. Telp</th>
                                 <th scope="col" className="px-6 py-3">Tempat Lahir</th>
                                 <th scope="col" className="px-6 py-3">Tanggal Lahir</th>
@@ -69,7 +66,6 @@ export default function HasilPeriksaPage() {
                                 >
                                     <td className="px-6 py-4">{user.namaLengkap}</td>
                                     <td className="px-6 py-4">{user.gender}</td>
-                                    <td className="px-6 py-4">{user.role}</td>
                                     <td className="px-6 py-4">{user.noTelp}</td>
                                     <td className="px-6 py-4">{user.tempatLahir}</td>
                                     <td className="px-6 py-4">{user.tanggalLahir}</td>

@@ -13,7 +13,16 @@ const Login = () => {
     const [error, setError] = useState('');
     const router = useRouter();
 
+    // Dummy Data for Users
+    const users = {
+        patient: { name: "Jack", phone: "08123456789", password: "patient123", redirectTo: "/pasien/dashboard" },
+        doctor: { name: "Dr. Natasha", phone: "08123456788", password: "doctor123", redirectTo: "/dokter/dashboard" },
+        admin: { name: "Admin", phone: "08123456787", password: "admin123", redirectTo: "/admin/dashboard" },
+    };
+
     const handleLogin = () => {
+        console.log('Login attempt:', { name, phone, role, password });
+
         // Validasi nama
         if (name.trim() === '') {
             setError('Name cannot be empty.');
@@ -29,10 +38,24 @@ const Login = () => {
             setError('Password must be at least 6 characters long.');
             return;
         }
-        // Jika semua validasi lolos
-        setError('');
-        console.log('Logging in with:', { name, phone, password });
-        router.push('/pasien/dashboard');
+
+        // Check user credentials based on role
+        if (role === 'Patient' && phone === users.patient.phone && password === users.patient.password) {
+            console.log('Redirecting to patient dashboard...');
+            setError('');
+            router.push(users.patient.redirectTo);  // Redirect to patient's dashboard
+        } else if (role === 'Doctor' && phone === users.doctor.phone && password === users.doctor.password) {
+            console.log('Redirecting to doctor dashboard...');
+            setError('');
+            router.push(users.doctor.redirectTo);  // Redirect to doctor's dashboard
+        } else if (role === 'Admin' && phone === users.admin.phone && password === users.admin.password) {
+            console.log('Redirecting to admin dashboard...');
+            setError('');
+            router.push(users.admin.redirectTo);  // Redirect to admin's dashboard
+        } else {
+            setError('Invalid credentials or role.');
+            console.log('Invalid credentials or role.');
+        }
     };
 
     return (
@@ -71,30 +94,52 @@ const Login = () => {
                             required
                         />
                     </div>
-                    {dropdownOpen && (
-                        <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow">
-                            <ul className="py-1 text-sm text-gray-700">
-                                <li>
-                                    <button
-                                        type="button"
-                                        onClick={() => { setRole("Patient"); setDropdownOpen(false); }}
-                                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Patient
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        onClick={() => { setRole("Doctor"); setDropdownOpen(false); }}
-                                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Doctor
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    )}
+
+                    {/* Add this button to toggle dropdown */}
+                    <div className="relative mb-4">
+                        <button
+                            type="button"
+                            onClick={() => setDropdownOpen(!dropdownOpen)}
+                            className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-100"
+                        >
+                            {role || 'Select Role'}
+                        </button>
+
+                        {dropdownOpen && (
+                            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow">
+                                <ul className="py-1 text-sm text-gray-700">
+                                    <li>
+                                        <button
+                                            type="button"
+                                            onClick={() => { setRole("Patient"); setDropdownOpen(false); }}
+                                            className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                        >
+                                            Patient
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            type="button"
+                                            onClick={() => { setRole("Doctor"); setDropdownOpen(false); }}
+                                            className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                        >
+                                            Doctor
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            type="button"
+                                            onClick={() => { setRole("Admin"); setDropdownOpen(false); }}
+                                            className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                                        >
+                                            Admin
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-sm font-regular text-gray-700">Password</label>
                         <input

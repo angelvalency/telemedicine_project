@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Navbar from "@/app/component/navbar";
 import React, { useState } from "react";
-import { X, UserRoundPlus, Edit, Trash2 } from "lucide-react";
+import { X, UserRoundPlus, Pencil, Trash2 } from "lucide-react";
 
 interface Appointment {
     id: string;
@@ -89,7 +89,7 @@ export default function HasilPeriksaPage() {
             <div className="relative">
                 <div className="absolute top-0 left-0 w-full flex justify-left ml-20">
                     <Image
-                        src="../assets/Telemedis_logo.svg"
+                        src="/assets/Telemedis_logo.svg"
                         alt="Telemedis Logo"
                         width={180}
                         height={180}
@@ -138,15 +138,15 @@ export default function HasilPeriksaPage() {
                                     <td className="px-6 py-4 flex gap-2">
                                         <button
                                             onClick={() => openModal(appointment)}
-                                            className="text-blue-500 hover:text-blue-700"
+                                            className="text-yellow-500 hover:text-yellow-700"
                                         >
-                                            <Edit size={16} />
+                                            <Pencil size={20} />
                                         </button>
                                         <button
                                             onClick={() => handleDelete(appointment.id)}
                                             className="text-red-500 hover:text-red-700"
                                         >
-                                            <Trash2 size={16} />
+                                            <Trash2 size={20} />
                                         </button>
                                     </td>
                                 </tr>
